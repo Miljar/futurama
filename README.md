@@ -56,7 +56,7 @@ Used tools:
 * Install a Feed (see [The Murderbot Diaries](http://www.marthawells.com/murderbot.htm)) - Basically, get Kafka running in-house. Maybe on a [k3s](https://k3s.io/) cluster, maybe not. Who knows.. My mind tends to change. Not about the Kafka setup though, the Feed must come.
 * Rewire all my Futurama devices to use the Feed (send events to the feed; send commands via the feed; ...)
 * Integrate a ZWave presence detector in the garage & link it to the lights there. I always forget to turn off the lights there, only to discover that a couple of hours later.
-* Integrate ZWave switch in bedroom to automate the night stand. Not sure how this works with the "must still work manually" mantro. Have to investigate.
+* Integrate ZWave switch in bedroom to automate the night stand. Not sure how this works with the "must still work manually" mantra. Have to investigate.
 * Switch from Domoticz (hello '90s) to [Home Assistant](https://www.home-assistant.io/) (welcome to 2019)
 * Integrate sensors to detect if plants need water
 * Integrate sensor which detects if snail mail was posted in my mail box
