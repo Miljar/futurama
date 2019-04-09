@@ -34,8 +34,8 @@ BeanFactoryRegistry::register($beanFactory);
 
 Amp\Loop::run(function () use ($beanFactory) {
     $sockets = [
-        Socket\listen("0.0.0.0:8080"),
-        Socket\listen("[::]:8080"),
+        Socket\listen("0.0.0.0:8085"),
+        Socket\listen("[::]:8085"),
     ];
 
     $router = new Router;
