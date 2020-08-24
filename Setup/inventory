@@ -1,0 +1,11 @@
+[hermes]
+192.168.0.135 ansible_user=tom
+
+[fry]
+fry.local ansible_user=pi
+
+[leela]
+leela.local ansible_user=root
+
+[zoidberg]
+zoidberg.local ansible_user=pi
