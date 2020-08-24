@@ -15,6 +15,7 @@ Nibbler | NAS
 Zoidberg | Plex Server
 Leela | Plex Client
 Fry | Domoticz, Relay API endpoint
+Hermes | Intel NUC - Experimental replacment of Zoidberg & Domoticz
 
 ## Purpose
 
