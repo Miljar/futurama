@@ -1,0 +1,34 @@
+---
+
+- hosts: hermes
+  become: true
+  tasks:
+  - name: Install Avahi packages
+    pacman:
+      name:
+        - avahi
+        - nss-mdns
+      state: latest
+
+  - name: Make sure .local is resolved
+    lineinfile:
+      path: /etc/nsswitch.conf
+      regexp: '^hosts'
+      line: 'hosts: files mymachines myhostname mdns4_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns'
+
+  - name: Open port 5353 for UDP traffic
+    iptables:
+      chain: INPUT
+      protocol: udp
+      destination_port: 5353
+      jump: ACCEPT
+
+  - name: Enable avahi service
+    service:
+      name: avahi-daemon
+      state: restarted
+
+  - name: Reload iptables
+    service:
+      name: iptables
+      state: reloaded
