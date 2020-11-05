@@ -1,0 +1,54 @@
+---
+- name: create folder
+  become: no
+  file:
+    path: "{{ location_service }}"
+    state: directory
+
+- name: create data folder
+  become: no
+  file:
+    path: "{{ location_service }}/data"
+    state: directory
+
+- name: Copy docker-compose.yml
+  become: no
+  copy:
+    src: docker-compose.yml
+    dest: "{{ location_docker_compose_config }}"
+
+- name: Copy mosquitto.conf
+  become: no
+  copy:
+    src: mosquitto.conf
+    dest: "{{ location_mosquitto_config }}"
+
+- name: Copy pwfile
+  become: no
+  copy:
+    src: pwfile
+    dest: "{{ location_mosquitto_pwfile }}"
+
+- name: Copy mqtt.service
+  template:
+    src: "{{ unit_file }}"
+    dest: "{{ location_unit }}"
+
+- name: Reload systemd config
+  service:
+    daemon_reload: yes
+
+- name: Enable & restart mqtt service
+  service:
+    name: "{{ unit_name }}"
+    state: restarted
+    enabled: yes
+
+- name: Open port 1883 for TCP traffic
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 1883
+    jump: ACCEPT
+  notify:
+    - Save iptables

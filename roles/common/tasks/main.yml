@@ -1,0 +1,6 @@
+---
+- name: Enable iptables on boot
+  service:
+    name: iptables
+    state: restarted
+    enabled: yes

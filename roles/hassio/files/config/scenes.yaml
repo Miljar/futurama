@@ -1,0 +1,124 @@
+- id: '1603308961770'
+  name: Close shutters
+  entities:
+    switch.rfy_0a0a0a_1:
+      friendly_name: Shutter TV
+      assumed_state: true
+      state: 'off'
+    cover.rfy_0a0a0a_1:
+      friendly_name: Shutter TV
+      assumed_state: true
+      supported_features: 11
+      state: closed
+    switch.rfy_000002_1:
+      friendly_name: Shutter 1
+      assumed_state: true
+      state: 'off'
+    cover.rfy_000002_1:
+      friendly_name: Shutter 1
+      assumed_state: true
+      supported_features: 11
+      state: closed
+    switch.rfy_000003_1:
+      friendly_name: Shutter 2
+      assumed_state: true
+      state: 'off'
+    cover.rfy_000003_1:
+      friendly_name: Shutter 2
+      assumed_state: true
+      supported_features: 11
+      state: closed
+    switch.rfy_010104_1:
+      friendly_name: Shutter 3
+      assumed_state: true
+      state: 'off'
+    cover.rfy_010104_1:
+      friendly_name: Shutter 3
+      assumed_state: true
+      supported_features: 11
+      state: closed
+    switch.rfy_000006_1:
+      friendly_name: Shutter 4
+      assumed_state: true
+      state: 'off'
+    cover.rfy_000006_1:
+      friendly_name: Shutter 4
+      assumed_state: true
+      supported_features: 11
+      state: closed
+  icon: mdi:theater
+- id: '1603309087866'
+  name: Good morning
+  entities:
+    media_player.keuken:
+      source_list:
+      - VRT Ketnet Hits
+      - VRT Klara Continuo
+      - VRT Radio 1
+      - VRT Radio 1 Classics
+      - VRT Radio 2 West Vlaanderen
+      - VRT Studio Brussel
+      - VRT Studio Brussel Bruut (Lokaal nieuws)
+      - VRT Studio Brussel De Tijdloze
+      - Willy
+      volume_level: 0.10
+      is_volume_muted: false
+      media_content_id: hls-radio://https://live-radio-cf-vrt.akamaized.net/groupc/live/582109ca-1e71-4330-93fc-e9affee94d7d/live.isml/.m3u8?dvr_window_length=30
+      media_content_type: music
+      media_title: VRT Studio Brussel De Tijdloze
+      media_channel: VRT Studio Brussel De Tijdloze
+      source: VRT Studio Brussel De Tijdloze
+      shuffle: false
+      sonos_group:
+      - media_player.keuken
+      friendly_name: Kitchen Radio
+      entity_picture: /api/media_player_proxy/media_player.keuken?token=991d53a71bcb5847aeda0901ae0782d76b2c1e5e7bf39938b9757866c15df1ca&cache=fde6a054f1403513
+      supported_features: 195135
+      state: playing
+    switch.rfy_000002_1:
+      friendly_name: Shutter 1
+      assumed_state: true
+      state: 'off'
+    cover.rfy_000002_1:
+      friendly_name: Shutter 1
+      assumed_state: true
+      supported_features: 11
+      state: open
+    switch.rfy_000003_1:
+      friendly_name: Shutter 2
+      assumed_state: true
+      state: 'off'
+    cover.rfy_000003_1:
+      friendly_name: Shutter 2
+      assumed_state: true
+      supported_features: 11
+      state: open
+    switch.rfy_010104_1:
+      friendly_name: Shutter 3
+      assumed_state: true
+      state: 'off'
+    cover.rfy_010104_1:
+      friendly_name: Shutter 3
+      assumed_state: true
+      supported_features: 11
+      state: open
+    switch.rfy_000006_1:
+      friendly_name: Shutter 4
+      assumed_state: true
+      state: 'off'
+    cover.rfy_000006_1:
+      friendly_name: Shutter 4
+      assumed_state: true
+      supported_features: 11
+      state: open
+    switch.rfy_0a0a0a_1:
+      friendly_name: Shutter TV
+      assumed_state: true
+      state: 'off'
+    cover.rfy_0a0a0a_1:
+      friendly_name: Shutter TV
+      assumed_state: true
+      supported_features: 11
+      state: open
+  icon: mdi:alarm
+

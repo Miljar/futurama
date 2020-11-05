@@ -1,0 +1,12 @@
+---
+location_base: "~/services"
+location_systemd: "/etc/systemd/system"
+
+location_unit: "{{ location_systemd }}/{{ unit_file }}"
+location_service: "{{ location_base }}/mqtt"
+location_docker_compose_config: "{{ location_service }}/docker-compose.yml"
+location_mosquitto_config: "{{ location_service }}/mosquitto.conf"
+location_mosquitto_pwfile: "{{ location_service }}/pwfile"
+
+unit_name: mqtt
+unit_file: "{{ unit_name }}.service"

@@ -1,0 +1,40 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+device_tracker:
+  - platform: unifi_direct
+    host: {{ unifi.ap }}
+    username: {{ unifi.username }}
+    password: {{ unifi.password }}
+
+
+homekit:
+
+rfxtrx:
+  device: /dev/ttyUSB0
+  #automatic_add: true
+  debug: true
+  devices:
+    # RFY Zonnewering Schuifraam
+    071a000001010101:
+    # RFY Zonnewering Keuken
+    071a000000000901:
+    # RFY Rolluik 1
+    071a000000000201:
+    # RFY Rolluik 2
+    071a000000000301:
+    # RFY Rolluik 3
+    071a000001010401:
+    # RFY Rolluik 4
+    071a000000000601:
+    # RFY Rolluik TV
+    071a00000A0A0A01:

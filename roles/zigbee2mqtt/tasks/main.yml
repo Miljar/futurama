@@ -1,0 +1,32 @@
+---
+- name: create folder
+  become: no
+  file:
+    path: "{{ location_service }}"
+    state: directory
+
+- name: Copy docker-compose.yml
+  become: no
+  copy:
+    src: docker-compose.yml
+    dest: "{{ location_docker_compose_config }}"
+
+- name: Copy configuration
+  template:
+    src: configuration.yaml
+    dest: "{{ location_config }}"
+
+- name: Copy zigbee2mqtt.service
+  template:
+    src: "{{ unit_file }}"
+    dest: "{{ location_unit }}"
+
+- name: Reload systemd config
+  service:
+    daemon_reload: yes
+
+- name: Enable & restart zigbee2mqtt service
+  service:
+    name: "{{ unit_name }}"
+    state: restarted
+    enabled: yes

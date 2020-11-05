@@ -1,0 +1,18 @@
+[Unit]
+Description=Plex
+Requires=docker.service
+After=docker.service media-nas.mount
+
+[Service]
+Restart=always
+User=tom
+Group=docker
+# Shutdown container (if running) when unit is stopped
+ExecStartPre=/usr/bin/docker-compose -f {{ location_docker_compose_config }} down -v
+# Start container when unit is started
+ExecStart=/usr/bin/docker-compose -f {{ location_docker_compose_config }} up
+# Stop container when unit is stopped
+ExecStop=/usr/bin/docker-compose -f {{ location_docker_compose_config }} down -v
+
+[Install]
+WantedBy=multi-user.target

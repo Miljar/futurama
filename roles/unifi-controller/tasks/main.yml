@@ -1,0 +1,55 @@
+---
+- name: create folder
+  become: no
+  file:
+    path: "{{ location_service }}"
+    state: directory
+
+- name: Copy docker-compose.yml
+  become: no
+  copy:
+    src: docker-compose.yml
+    dest: "{{ location_docker_compose_config }}"
+
+- name: Copy unifi.service
+  template:
+    src: "{{ unit_file }}"
+    dest: "{{ location_unit }}"
+
+- name: Reload systemd config
+  service:
+    daemon_reload: yes
+
+- name: Enable & restart unifi service
+  service:
+    name: "{{ unit_name }}"
+    state: restarted
+    enabled: yes
+
+- name: Open ports for UDP traffic
+  iptables:
+    chain: INPUT
+    protocol: udp
+    destination_port: "{{ item | int }}"
+    jump: ACCEPT
+  with_items:
+    - 3478
+    - 10001
+    - 1900
+  notify:
+    - Save iptables
+
+- name: Open ports for TCP traffic
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item | int }}"
+    jump: ACCEPT
+  with_items:
+    - 8080
+    - 8443
+    - 8880
+    - 6789
+    - 5514
+  notify:
+    - Save iptables

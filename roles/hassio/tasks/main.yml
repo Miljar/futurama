@@ -1,0 +1,83 @@
+---
+- name: create folder
+  become: no
+  file:
+    path: "{{ location_service }}"
+    state: directory
+
+- name: create config folder
+  become: no
+  file:
+    path: "{{ location_service }}/config"
+    state: directory
+
+- name: Copy docker-compose.yml
+  become: no
+  copy:
+    src: docker-compose.yml
+    dest: "{{ location_docker_compose_config }}"
+
+- name: Copy hassio.service
+  become: no
+  template:
+    src: "{{ unit_file }}"
+    dest: "{{ location_unit }}"
+
+- name: Copy hassio config file
+  become: no
+  template:
+    src: configuration.yaml
+    dest: "{{ location_service }}/config/configuration.yaml"
+
+- name: Copy config files
+  copy:
+    src: "config/{{ item }}"
+    dest: "{{ location_service }}/config/{{ item }}"
+  with_items:
+    - automations.yaml
+    - scenes.yaml
+
+- name: Install curl
+  pacman:
+    name:
+      - curl
+      - jq
+      - dbus
+      - networkmanager
+      - ca-certificates
+      - socat
+    state: latest
+
+- name: Open port 8123 for TCP traffic
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 8123
+    jump: ACCEPT
+  notify:
+    - Save iptables
+
+- name: Open ports for UDP traffic
+  iptables:
+    chain: INPUT
+    protocol: udp
+    destination_port: "{{ item | int }}"
+    jump: ACCEPT
+  with_items:
+    - 1900
+    - 1901
+    - 136
+    - 137
+    - 138
+  notify:
+    - Save iptables
+
+- name: Reload systemd config
+  service:
+    daemon_reload: yes
+
+- name: Enable & restart hassio service
+  service:
+    name: "{{ unit_name }}"
+    state: restarted
+    enabled: yes

@@ -1,0 +1,56 @@
+---
+- name: create folder
+  become: no
+  file:
+    path: "{{ location_service }}"
+    state: directory
+
+- name: Copy docker-compose.yml
+  become: no
+  copy:
+    src: docker-compose.yml
+    dest: "{{ location_docker_compose_config }}"
+
+- name: Copy pihole.env
+  become: no
+  copy:
+    src: pihole.env
+    dest: "{{ location_service }}/pihole.env"
+
+- name: Copy pihole.service
+  template:
+    src: "{{ unit_file }}"
+    dest: "{{ location_unit }}"
+
+- name: Disable systemd-resolved
+  service:
+    name: systemd-resolved
+    state: stopped
+
+- name: Reload systemd config
+  service:
+    daemon_reload: yes
+
+- name: Enable & restart pihole service
+  service:
+    name: "{{ unit_name }}"
+    state: restarted
+    enabled: yes
+
+- name: Open port 53 for UDP traffic
+  iptables:
+    chain: INPUT
+    protocol: udp
+    destination_port: 53
+    jump: ACCEPT
+  notify:
+    - Save iptables
+
+- name: Open port 53 for TCP traffic
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 53
+    jump: ACCEPT
+  notify:
+    - Save iptables

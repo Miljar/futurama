@@ -1,0 +1,28 @@
+---
+- name: Update cache
+  pacman:
+    update_cache: yes
+
+- name: Install docker & docker-compose
+  pacman:
+    name:
+      - glibc
+      - docker
+      - docker-compose
+    state: latest
+
+- name: Ensure group "docker" exists
+  group:
+    name: docker
+    state: present
+
+- name: Add user to "docker" group
+  user:
+    name: "{{ hostvars.hermes.ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Enable docker service
+  service:
+    name: docker
+    state: restarted

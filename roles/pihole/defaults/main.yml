@@ -1,0 +1,10 @@
+---
+location_base: "~/services"
+location_systemd: "/etc/systemd/system"
+
+location_unit: "{{ location_systemd }}/{{ unit_file }}"
+location_service: "{{ location_base }}/pihole"
+location_docker_compose_config: "{{ location_service }}/docker-compose.yml"
+
+unit_name: pihole
+unit_file: "{{ unit_name }}.service"
