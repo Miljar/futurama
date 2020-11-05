@@ -1,0 +1,16 @@
+---
+
+- name: Sets up media center
+  hosts: hermes
+  become: yes
+
+  roles:
+    - common
+    - avahi
+    - docker-setup
+    - pihole
+    - hassio
+    - mqtt
+    - plex-server
+    - unifi-controller
+    - zigbee2mqtt

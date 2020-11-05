@@ -1,0 +1,55 @@
+- id: '1603309193384'
+  alias: Wake Up! (sunrise)
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+  condition: []
+  action:
+  - scene: scene.good_morning
+  mode: single
+- id: '1603309242666'
+  alias: Evening mode (sunset)
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - scene: scene.tv_mode
+  mode: single
+- id: '1603309685411'
+  alias: Watch TV
+  description: Stop all radio's when watching plex
+  trigger:
+  - platform: state
+    entity_id: media_player.plex_plexhometheater_leela
+    to: playing
+  condition: []
+  action:
+  - service: media_player.media_pause
+    data:
+      entity_id:
+      - media_player.keuken
+  mode: single
+- id: '1603388303003'
+  alias: Evening mode (time-based)
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:30'
+  condition: []
+  action:
+  - scene: scene.tv_mode
+  mode: single
+- id: '1603388363003'
+  alias: Wake Up! (time-based)
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00
+  condition: []
+  action:
+  - scene: scene.good_morning
+  mode: single
+

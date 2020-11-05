@@ -1,0 +1,49 @@
+---
+- name: Update cache
+  pacman:
+    update_cache: yes
+
+- name: Install nfs-utils
+  pacman:
+    name:
+      - nfs-utils
+    state: latest
+
+- name: create folder
+  file:
+    path: "{{ media.local_path }}"
+    state: directory
+
+- name: Open necessary ports for TCP traffic
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item | int }}"
+    jump: ACCEPT
+  with_items:
+    - 111
+    - 2049
+    - 20048
+  notify:
+    - Save iptables
+
+- name: Open necessary ports for UDP traffic
+  iptables:
+    chain: INPUT
+    protocol: udp
+    destination_port: "{{ item | int }}"
+    jump: ACCEPT
+  with_items:
+    - 111
+    - 2048
+    - 2049
+  notify:
+    - Save iptables
+
+- name: Mount NFS share to NAS
+  ansible.posix.mount:
+    path: "{{ media.local_path }}"
+    src: "{{ hostvars.nibbler.ansible_host }}:{{ media.remote_path }}"
+    fstype: nfs
+    opts: defaults,timeo=900,retrans=5,_netdev
+    state: present

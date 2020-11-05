@@ -1,0 +1,4 @@
+---
+- include_tasks: fstab.yml
+
+- include_tasks: plex.yml

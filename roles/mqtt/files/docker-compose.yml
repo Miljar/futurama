@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    user: "1883"
+    volumes:
+      - ./data:/mosquitto/data
+        #- ./volumes/mosquitto/log:/mosquitto/log
+      - ./pwfile:/mosquitto/pwfile/pwfile
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+        #- ./services/mosquitto/filter.acl:/mosquitto/config/filter.acl
+    network_mode: host
+

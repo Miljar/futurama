@@ -1,0 +1,11 @@
+---
+location_base: "~/services"
+location_systemd: "/etc/systemd/system"
+
+location_unit: "{{ location_systemd }}/{{ unit_file }}"
+location_service: "{{ location_base }}/zigbee2mqtt"
+location_docker_compose_config: "{{ location_service }}/docker-compose.yml"
+location_config: "{{ location_service }}/data/configuration.yaml"
+
+unit_name: zigbee2mqtt
+unit_file: "{{ unit_name }}.service"

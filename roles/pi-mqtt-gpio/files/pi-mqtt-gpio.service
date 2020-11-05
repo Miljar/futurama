@@ -1,0 +1,10 @@
+[Unit]
+Description=Pi-MQTT-GPIO
+
+[Service]
+Restart=always
+User=root
+ExecStart=/home/alarm/services/pi-mqtt-gpio/ve/bin/python -m pi_mqtt_gpio.server /home/alarm/services/pi-mqtt-gpio/config.yml
+
+[Install]
+WantedBy=multi-user.target

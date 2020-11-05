@@ -1,0 +1,67 @@
+---
+- debug:
+    msg: "{{ hostvars }}"
+
+- name: Install necessary packages
+  pacman:
+    name:
+      - python-pip
+      - python-virtualenv
+      - gcc
+    state: latest
+
+- name: Install pi-mqtt-gpio pip package
+  pip:
+    name:
+      - RPi.GPIO
+      - pi-mqtt-gpio
+    virtualenv: "{{ location_virtual_env }}"
+    virtualenv_site_packages: yes
+
+- name: create folder
+  become: no
+  file:
+    path: "{{ location_service }}"
+    state: directory
+
+- name: Copy config.yml
+  become: no
+  template:
+    src: config.yml
+    dest: "{{ mqtt.config_location }}"
+
+- name: Copy unit file
+  copy:
+    src: pi-mqtt-gpio.service
+    dest: "{{ location_unit }}"
+    owner: alarm
+    group: alarm
+    mode: '0644'
+
+- name: Reload systemd config
+  service:
+    daemon_reload: yes
+
+- name: Enable & restart service
+  service:
+    name: "{{ unit_name }}"
+    state: restarted
+    enabled: yes
+
+- name: Open port 1883 for outgoing TCP traffic
+  iptables:
+    chain: OUTPUT
+    protocol: tcp
+    destination_port: 1883
+    jump: ACCEPT
+  notify:
+    - Save iptables
+
+- name: Open port 1883 for incoming TCP traffic
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 1883
+    jump: ACCEPT
+  notify:
+    - Save iptables

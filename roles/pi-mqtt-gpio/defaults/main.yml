@@ -1,0 +1,15 @@
+---
+location_base: "~/services"
+location_systemd: "/etc/systemd/system"
+
+unit_name: pi-mqtt-gpio
+unit_file: "{{ unit_name }}.service"
+
+location_unit: "{{ location_systemd }}/{{ unit_file }}"
+location_service: "{{ location_base }}/pi-mqtt-gpio"
+location_virtual_env: "{{ location_service }}/ve"
+
+digital_outputs:
+  pulse_delay: 150
+  retain: no
+  initial: high

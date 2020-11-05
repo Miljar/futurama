@@ -1,0 +1,71 @@
+mqtt:
+  host: "{{ hostvars.hermes.ansible_host }}"
+  port: {{ mqtt.port }}
+  user: "{{ mqtt.user }}"
+  password: "{{ mqtt.password }}"
+  topic_prefix: "{{ mqtt.topic_prefix }}"
+  discovery: yes
+  discovery_prefix: homeassistant
+  discovery_name: MQTT GPIO FRY
+
+#logging:
+#  version: 1
+#  formatters:
+#    simple:
+#      format: "%(asctime)s %(name)s (%(levelname)s): %(message)s"
+#  handlers:
+#    console:
+#      class: logging.StreamHandler
+#      level: DEBUG
+#      formatter: simple
+#      stream: ext://sys.stdout
+
+gpio_modules:
+  - name: raspberrypi
+    module: raspberrypi
+
+# 17 -> R1 (kitchen table)
+# 18 -> R2 (kitchen counter)
+# 27 -> R3 (living room)
+# 22 -> R4 (dining room)
+# 23 -> R5 (Reserved: Corridor ground level)
+# 24 -> R6 (Reserved: Corridor first level)
+# 25 -> R7 (unused)
+# 03 -> R8 (unused)
+digital_outputs:
+  - name: kitchen_table_lights
+    module: raspberrypi
+    pin: 17
+    timed_set_ms: {{ digital_outputs.pulse_delay }}
+    on_payload: "ON"
+    off_payload: "OFF"
+    initial: "{{ digital_outputs.initial }}"
+    retain: {{ digital_outputs.retain }}
+    #publish_initial: yes
+  - name: kitchen_counter_lights
+    module: raspberrypi
+    pin: 18
+    timed_set_ms: {{ digital_outputs.pulse_delay }}
+    on_payload: "ON"
+    off_payload: "OFF"
+    initial: "{{ digital_outputs.initial }}"
+    retain: {{ digital_outputs.retain }}
+    #publish_initial: yes
+  - name: living_main_lights
+    module: raspberrypi
+    pin: 27
+    timed_set_ms: {{ digital_outputs.pulse_delay }}
+    on_payload: "ON"
+    off_payload: "OFF"
+    initial: "{{ digital_outputs.initial }}"
+    retain: {{ digital_outputs.retain }}
+    #publish_initial: yes
+  - name: dining_main_lights
+    module: raspberrypi
+    pin: 22
+    timed_set_ms: {{ digital_outputs.pulse_delay }}
+    on_payload: "ON"
+    off_payload: "OFF"
+    initial: "{{ digital_outputs.initial }}"
+    retain: {{ digital_outputs.retain }}
+    #publish_initial: yes

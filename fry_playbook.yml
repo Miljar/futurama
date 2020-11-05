@@ -1,0 +1,12 @@
+---
+
+- name: Sets up Fry
+  hosts: fry
+  become: yes
+  environment:
+    CFLAGS: "-fcommon" # Needed to compile a pi-mqtt-gpio dependency
+
+  roles:
+    - common
+    - avahi
+    - pi-mqtt-gpio
